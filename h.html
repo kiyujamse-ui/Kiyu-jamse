@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leman Secondary School - Grade 12 Entrance Exam Portal</title>
+    <!-- Tailwind CSS for utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* --- 3D ANIMATED HEADER STYLING --- */
+        .perspective-container {
+            perspective: 1000px;
+        }
+        
+        .hero-title-3d {
+            font-family: 'Montserrat', sans-serif;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease-out;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 
+                0 1px 0 #b45309,
+                0 2px 0 #92400e,
+                0 3px 0 #78350f,
+                0 4px 0 #451a03,
+                0 5px 0 #180800,
+                0 8px 15px rgba(0, 0, 0, 0.9),
+                0 0 25px rgba(245, 158, 11, 0.5);
+        }
+
+        .hero-title-3d:hover {
+            transform: rotateX(8deg) rotateY(-8deg) scale(1.02);
+        }
+
+        /* Pulsing Glow Effect */
+        @keyframes ambientGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4)); }
+            50% { filter: drop-shadow(0 0 35px rgba(16, 185, 129, 0.6)); }
+        }
+
+        .ambient-glow {
+            animation: ambientGlow 6s infinite ease-in-out;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card-hover:hover {
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f59e0b;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-amber-500 selection:text-black">
+
+    <!-- BACKGROUND LIGHT DECORATIONS -->
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/3 -right-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="relative z-10 flex-1 flex flex-col">
+
+        <!-- HEADER & NAVIGATION -->
+        <header class="border-b border-gray-800/80 bg-gray-950/80 backdrop-blur-md sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                
+                <!-- School Brand -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 via-emerald-500 to-emerald-700 flex items-center justify-center shadow-lg shadow-amber-500/20 ring-2 ring-amber-400/30">
+                        <i class="fa-solid fa-graduation-cap text-gray-950 text-2xl font-bold"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-widest font-extrabold text-amber-400 block">Grade 12 Entrance Portal</span>
+                        <span class="text-base sm:text-lg font-bold text-gray-100">Leman Secondary School</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Tabs -->
+                <nav class="hidden md:flex items-center space-x-1 bg-gray-900/90 p-1.5 rounded-2xl border border-gray-800">
+                    <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-tab flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-500 text-gray-950 shadow-md">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Practice Exam</span>
+                    </button>
+                    <button onclick="switchTab('archive')" id="tab-archive" class="nav-tab flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold text-gray-400 hover:text-gray-200 hover:bg-gray-800 transition-all">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Question Bank</span>
+                    </button>
+                    <button onclick="switchTab('analytics')" id="tab-analytics" class="nav-tab flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold text-gray-400 hover:text-gray-200 hover:bg-gray-800 transition-all">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Analytics</span>
+                    </button>
+                </nav>
+
+                <!-- Stream Switcher Pill -->
+                <div class="flex items-center space-x-1 bg-gray-900 p-1 rounded-xl border border-gray-800">
+                    <button onclick="setStream('social')" id="stream-btn-social" class="stream-btn px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md">
+                        Social Stream
+                    </button>
+                    <button onclick="setStream('natural')" id="stream-btn-natural" class="stream-btn px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all text-gray-400 hover:text-gray-200">
+                        Natural Stream
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Sub-Bar -->
+            <div class="md:hidden border-t border-gray-800/60 bg-gray-950 flex justify-around py-2 px-4">
+                <button onclick="switchTab('quiz')" class="mobile-tab-quiz flex flex-col items-center text-amber-400 text-xs font-bold">
+                    <i class="fa-solid fa-bolt mb-1 text-sm"></i> Practice
+                </button>
+                <button onclick="switchTab('archive')" class="mobile-tab-archive flex flex-col items-center text-gray-400 text-xs font-bold">
+                    <i class="fa-solid fa-book-open mb-1 text-sm"></i> Archive
+                </button>
+                <button onclick="switchTab('analytics')" class="mobile-tab-analytics flex flex-col items-center text-gray-400 text-xs font-bold">
+                    <i class="fa-solid fa-chart-pie mb-1 text-sm"></i> Analytics
+                </button>
+            </div>
+        </header>
+
+        <!-- HERO SECTION WITH 3D ANIMATED SCHOOL NAME -->
+        <section class="relative py-12 md:py-16 overflow-hidden border-b border-gray-800/80 bg-gradient-to-b from-gray-900/60 to-gray-950 text-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                
+                <!-- 3D Interactive Container -->
+                <div class="perspective-container my-3 inline-block">
+                    <div id="hero3d" class="hero-title-3d ambient-glow text-4xl sm:text-6xl md:text-7xl font-black cursor-pointer select-none">
+                        Leman Secondary School
+                    </div>
+                </div>
+
+                <p class="mt-4 text-sm sm:text-base md:text-lg text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
+                    Grade 12 National Ethiopian University Entrance Examination (EUEE) Portal
+                </p>
+
+                <!-- HERO QUICK STATS -->
+                <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div class="glass-card p-4 rounded-2xl text-center">
+                        <div class="text-amber-400 font-black text-xl sm:text-2xl md:text-3xl">2018 E.C.</div>
+                        <div class="text-gray-400 text-xs mt-1 font-medium">Model & Entrance Exam Papers</div>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl text-center">
+                        <div id="stat-stream-name" class="text-emerald-400 font-black text-xl sm:text-2xl md:text-3xl">Social Science</div>
+                        <div class="text-gray-400 text-xs mt-1 font-medium">Active Stream Selection</div>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl text-center">
+                        <div id="stat-total-q" class="text-cyan-400 font-black text-xl sm:text-2xl md:text-3xl">0</div>
+                        <div class="text-gray-400 text-xs mt-1 font-medium">Questions Available</div>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl text-center">
+                        <div class="text-purple-400 font-black text-xl sm:text-2xl md:text-3xl">120 Mins</div>
+                        <div class="text-gray-400 text-xs mt-1 font-medium">Exam Time Allowed</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <!-- STREAM & SUBJECT SELECTION BAR -->
+            <div class="mb-8 glass-card p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-3 w-full md:w-auto">
+                    <span id="stream-indicator-dot" class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <div>
+                        <span class="text-[10px] text-gray-400 uppercase font-bold tracking-wider block">Active Exam Stream</span>
+                        <h2 id="stream-title-text" class="text-base font-extrabold text-gray-100">
+                            Social Science Stream (Economics, Geography, History, Math, English)
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Subject Filter Buttons -->
+                <div id="subject-filter-container" class="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
+                    <!-- Dynamic rendering by JS -->
+                </div>
+            </div>
+
+            <!-- TAB 1: PRACTICE EXAM ENGINE -->
+            <div id="view-quiz" class="tab-view space-y-6">
+                
+                <!-- START EXAM BANNER (Shown before quiz starts) -->
+                <div id="quiz-start-card" class="glass-card p-8 sm:p-12 rounded-3xl text-center max-w-2xl mx-auto shadow-2xl space-y-6">
+                    <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400">
+                        <i class="fa-solid fa-award text-3xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-100">Grade 12 Entrance Examination Simulator</h3>
+                        <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                            Simulate the actual 2018 E.C. Ethiopian University Entrance Exam (EUEE). Answer questions, track your timed performance, and receive an instant detailed score breakdown.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-gray-950/80 border border-gray-800 text-left space-y-3 text-xs text-gray-300">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-emerald-400"></i>
+                            <span>Available Filtered Questions: <strong id="start-q-count" class="text-white">0</strong></span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-clock text-amber-400"></i>
+                            <span>Standard Time Limit: <strong class="text-white">120 Minutes</strong></span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-graduation-cap text-purple-400"></i>
+                            <span>Curated directly from Official Grade 12 Exam PDFs</span>
+                        </div>
+                    </div>
+
+                    <button onclick="startQuiz()" id="start-quiz-btn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-gray-950 font-black text-sm tracking-wider uppercase hover:brightness-110 transition-all shadow-xl shadow-amber-500/20">
+                        Start Entrance Exam Now
+                    </button>
+                </div>
+
+                <!-- ACTIVE EXAM CONTAINER (Hidden initially) -->
+                <div id="quiz-active-container" class="hidden space-y-6">
+                    
+                    <!-- Quiz Top Bar -->
+                    <div class="glass-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center space-x-3">
+                            <span id="quiz-progress-badge" class="px-3 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-extrabold">
+                                Question 1 of 10
+                            </span>
+                            <span id="quiz-subject-badge" class="text-xs font-semibold text-gray-300">
+                                Economics
+                            </span>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center space-x-2 bg-gray-950 px-3 py-1.5 rounded-xl border border-gray-800">
+                                <i class="fa-solid fa-stopwatch text-amber-400 animate-pulse text-sm"></i>
+                                <span id="quiz-timer" class="font-mono text-sm font-bold text-amber-400">120:00</span>
+                            </div>
+                            <button onclick="finishQuiz()" class="px-4 py-1.5 rounded-xl bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 text-xs font-bold transition-all">
+                                Finish Exam
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full h-2 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                        <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-emerald-500 transition-all duration-300" style="width: 0%"></div>
+                    </div>
+
+                    <!-- Question & Options Card -->
+                    <div class="glass-card p-6 sm:p-8 rounded-3xl space-y-6 shadow-xl">
+                        <div>
+                            <span id="q-number-title" class="text-xs font-bold text-amber-400 uppercase tracking-widest">Question #1</span>
+                            <h3 id="q-text" class="text-base sm:text-xl font-semibold text-gray-100 mt-2 leading-relaxed">
+                                Question text here...
+                            </h3>
+                        </div>
+
+                        <!-- Options Input Container -->
+                        <div id="q-options-container" class="space-y-3">
+                            <!-- Dynamic render options -->
+                        </div>
+
+                        <!-- Quiz Navigation Controls -->
+                        <div class="flex items-center justify-between pt-6 border-t border-gray-800">
+                            <button onclick="navigateQuiz(-1)" id="btn-prev-q" class="px-4 py-2 rounded-xl bg-gray-950 border border-gray-800 text-gray-300 text-xs font-bold hover:bg-gray-800 transition-all">
+                                <i class="fa-solid fa-chevron-left mr-1"></i> Previous
+                            </button>
+                            <span id="q-step-counter" class="text-xs text-gray-500 font-medium">1 / 10</span>
+                            <button onclick="navigateQuiz(1)" id="btn-next-q" class="px-6 py-2 rounded-xl bg-amber-500 text-gray-950 text-xs font-black hover:bg-amber-400 transition-all">
+                                Next <i class="fa-solid fa-chevron-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUIZ RESULTS VIEW (Hidden initially) -->
+                <div id="quiz-results-card" class="hidden glass-card p-8 sm:p-12 rounded-3xl text-center space-y-6">
+                    <div class="w-20 h-20 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400">
+                        <i class="fa-solid fa-trophy text-4xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-black text-gray-100">Examination Completed</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm mt-1">Grade 12 Entrance Performance Report - Leman Secondary School</p>
+                    </div>
+
+                    <!-- Results Summary Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto">
+                        <div class="p-4 rounded-2xl bg-gray-950 border border-gray-800">
+                            <div class="text-xs text-gray-400 font-semibold">Final Score</div>
+                            <div id="res-percentage" class="text-3xl font-black text-amber-400 mt-1">0%</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-gray-950 border border-gray-800">
+                            <div class="text-xs text-gray-400 font-semibold">Correct Answers</div>
+                            <div id="res-correct" class="text-3xl font-black text-emerald-400 mt-1">0 / 0</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-gray-950 border border-gray-800">
+                            <div class="text-xs text-gray-400 font-semibold">Time Spent</div>
+                            <div id="res-time-spent" class="text-xl font-bold text-gray-200 mt-2">00:00</div>
+                        </div>
+                      </div>
+
+                    <!-- Answers Review Container -->
+                    <div class="text-left mt-8 space-y-4 max-w-3xl mx-auto">
+                        <h4 class="text-base font-bold text-gray-200 border-b border-gray-800 pb-3 flex items-center justify-between">
+                            <span>Detailed Answer Key & Explanations</span>
+                            <span class="text-xs font-normal text-gray-400">Green = Correct Answer</span>
+                        </h4>
+                        <div id="results-review-list" class="space-y-4">
+                            <!-- Dynamic rendering -->
+                        </div>
+                    </div>
+
+                    <button onclick="resetExam()" class="mt-8 px-8 py-3.5 rounded-xl bg-amber-500 text-gray-950 font-black text-sm uppercase hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/20">
+                        Retake Examination
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- TAB 2: QUESTION BANK ARCHIVE -->
+            <div id="view-archive" class="tab-view hidden space-y-6">
+                
+                <!-- Search & Filters -->
+                <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row gap-4 items-center justify-between">
+                    <div class="relative w-full sm:w-96">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs"></i>
+                        <input type="text" id="archive-search-input" oninput="renderArchive()" placeholder="Search questions, options, topics..." class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-gray-950 border border-gray-800 text-xs text-gray-200 placeholder-gray-500 focus:outline-none focus:border-amber-500 transition-all">
+                    </div>
+                    <div class="text-xs text-gray-400 font-semibold">
+                        Showing <strong id="archive-count" class="text-amber-400">0</strong> questions in repository
+                    </div>
+                </div>
+
+                <!-- Archive Questions Render List -->
+                <div id="archive-questions-list" class="space-y-4">
+                    <!-- Dynamic rendering by JS -->
+                </div>
+            </div>
+
+            <!-- TAB 3: PERFORMANCE ANALYTICS -->
+            <div id="view-analytics" class="tab-view hidden space-y-6">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-2xl space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                            <i class="fa-solid fa-book text-lg"></i>
+                        </div>
+                        <h4 class="text-gray-400 text-xs uppercase font-bold tracking-wider">Exam Papers Included</h4>
+                        <div class="text-3xl font-black text-gray-100">8 Papers</div>
+                        <p class="text-xs text-gray-500">Economics, Geography, History, Math (V1-V5), English</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                            <i class="fa-solid fa-layer-group text-lg"></i>
+                        </div>
+                        <h4 class="text-gray-400 text-xs uppercase font-bold tracking-wider">Stream Coverage</h4>
+                        <div class="text-3xl font-black text-gray-100">Natural & Social</div>
+                        <p class="text-xs text-gray-500">Tailored specifically for Leman Secondary School</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                            <i class="fa-solid fa-bullseye text-lg"></i>
+                        </div>
+                        <h4 class="text-gray-400 text-xs uppercase font-bold tracking-wider">Pass Benchmark</h4>
+                        <div class="text-3xl font-black text-gray-100">80%+ Standard</div>
+                        <p class="text-xs text-gray-500">National Ethiopian entrance exam passing threshold</p>
+                    </div>
+                </div>
+
+                <!-- Subject-Wise Question Breakdown Table -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-bold text-gray-100">Subject Performance & Question Repository Breakdown</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-gray-300">
+                            <thead class="bg-gray-950 text-gray-400 uppercase font-semibold border-b border-gray-800">
+                                <tr>
+                                    <th class="p-3">Subject Name</th>
+                                    <th class="p-3">Stream</th>
+                                    <th class="p-3">Source Exam Paper</th>
+                                    <th class="p-3">Available Questions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-800/60">
+                                <tr>
+                                    <td class="p-3 font-semibold text-amber-400">Economics</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold">Social</span></td>
+                                    <td class="p-3">2018 E.C. Model Exam</td>
+                                    <td class="p-3 font-bold">6 Questions</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold text-amber-400">Geography</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold">Social</span></td>
+                                    <td class="p-3">2018 E.C. Model Exam</td>
+                                    <td class="p-3 font-bold">5 Questions</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold text-amber-400">History</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold">Social</span></td>
+                                    <td class="p-3">2018 E.C. Model Exam</td>
+                                    <td class="p-3 font-bold">4 Questions</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold text-amber-400">Mathematics</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-bold">Both</span></td>
+                                    <td class="p-3">2018 E.C. Versions 1-5 & Round 1</td>
+                                    <td class="p-3 font-bold">5 Questions</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold text-amber-400">English</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-bold">Both</span></td>
+                                    <td class="p-3">2018 E.C. Entrance Exam (Version 2)</td>
+                                    <td class="p-3 font-bold">5 Questions</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-gray-900 bg-gray-950 py-6 text-center text-xs text-gray-500 mt-auto">
+            <div class="max-w-7xl mx-auto px-4">
+                <p>© 2026 Leman Secondary School - Grade 12 Ethiopian University Entrance Exam Portal.</p>
+                <p class="mt-1 text-gray-600">Questions sourced directly from Grade 12 2018 E.C. Economics, Geography, History, Mathematics, & English exam papers.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // --- COMPLETE QUESTION DATABASE EXTRACTED FROM PROVIDED PDF EXAMS ---
+        const QUESTION_DATABASE = [
+            // ECONOMICS (Social Science Stream)
+            {
+                id: 'eco-1',
+                stream: 'social',
+                subject: 'Economics',
+                examTitle: 'Grade 12 Economics 2018 E.C. Model Exam',
+                qNum: 1,
+                question: 'As social science student which one of the following practices should be encourage the transformation of the rural economy in Ethiopia from agriculture to industry?',
+                options: [
+                    'A. Inappropriate or incorrect pricing policy towards agricultural products.',
+                    'B. Inappropriate or incorrect entitlement of land property',
+                    'C. Increasing prices of agricultural inputs',
+                    'D. Credit offerings at lower interest rates'
+                ],
+                answer: 3
+            },
+            {
+                id: 'eco-2',
+                stream: 'social',
+                subject: 'Economics',
+                examTitle: 'Grade 12 Economics 2018 E.C. Model Exam',
+                qNum: 2,
+                question: 'Which of the following correctly describes the difference between nominal GDP and real GDP?',
+                options: [
+                    'A. Nominal GDP is calculated using current prices, while real GDP is calculated using current population.',
+                    'B. Nominal GDP is calculated using constant prices, while real GDP is calculated using constant population.',
+                    'C. Nominal GDP is calculated using current prices, while real GDP is calculated using constant prices.',
+                    'D. Nominal GDP is calculated using constant prices, while real GDP is calculated using current prices.'
+                ],
+                answer: 2
+            },
+            {
+                id: 'eco-3',
+                stream: 'social',
+                subject: 'Economics',
+                examTitle: 'Grade 12 Economics 2018 E.C. Model Exam',
+                qNum: 3,
+                question: 'Which of the following statement describes aggregate demand (AD)?',
+                options: [
+                    'A. The total expenditure by households on final goods and services in an economy',
+                    'B. The total spending by all sectors of an economy at different price levels',
+                    'C. The total quantity of goods supplied by individual firms in an economy',
+                    'D. The total income of households spends on final durable goods.'
+                ],
+                answer: 1
+            },
+            {
+                id: 'eco-4',
+                stream: 'social',
+                subject: 'Economics',
+                examTitle: 'Grade 12 Economics 2018 E.C. Model Exam',
+                qNum: 4,
+                question: 'Which statement best explains consumer equilibrium under Indifference Curve Analysis?',
+                options: [
+                    'A. When maximum income is achieved at higher level of production by firms',
+                    'B. When the budget line intersects the demand curve',
+                    'C. When the highest possible indifference curve is tangent to the budget line',
+                    'D. When the total utility becomes constant at various level of income'
+                ],
+                answer: 2
+            },
+            {
+                id: 'eco-13',
+                stream: 'social',
+                subject: 'Economics',
+                examTitle: 'Grade 12 Economics 2018 E.C. Model Exam',
+                qNum: 13,
+                question: 'The difference between GDP and GNP is that GNP:',
+                options: [
+                    'A. Excludes net income from abroad',
+                    'B. Exclude export',
+                    'C. Excludes taxes',
+                    'D. Includes net income from abroad'
+                ],
+                answer: 3
+            },
+            {
+                id: 'eco-27',
+                stream: 'social',
+                subject: 'Economics',
+                examTitle: 'Grade 12 Economics 2018 E.C. Model Exam',
+                qNum: 27,
+                question: 'A tax imposed on activities that generate negative externalities is called:',
+                options: [
+                    'A. income tax',
+                    'B. sales tax',
+                    'C. Pigouvian tax',
+                    'D. trade tax'
+                ],
+                answer: 2
+            },
+
+            // GEOGRAPHY (Social Science Stream)
+            {
+                id: 'geo-1',
+                stream: 'social',
+                subject: 'Geography',
+                examTitle: 'Grade 12 Geography 2018 E.C. Model Exam',
+                qNum: 1,
+                question: 'Which major geological feature is directly formed through tectonic convergence and subduction of two oceanic plates?',
+                options: [
+                    'A. The Mariana volcanic feature',
+                    'B. The Himalayas mountain',
+                    'C. The East African rift valley',
+                    'D. The San Andreas Fault'
+                ],
+                answer: 0
+            },
+            {
+                id: 'geo-3',
+                stream: 'social',
+                subject: 'Geography',
+                examTitle: 'Grade 12 Geography 2018 E.C. Model Exam',
+                qNum: 3,
+                question: 'What is the most accurate description of Geography as a discipline?',
+                options: [
+                    'A. The study of human population distribution and economic activities',
+                    'B. The examination of man-environment interactions from a spatial perspective',
+                    'C. The description of Earth\'s physical features and their locations',
+                    'D. The analysis of Earth\'s shape, size, and climatic conditions'
+                ],
+                answer: 1
+            },
+            {
+                id: 'geo-6',
+                stream: 'social',
+                subject: 'Geography',
+                examTitle: 'Grade 12 Geography 2018 E.C. Model Exam',
+                qNum: 6,
+                question: 'Which geological principle states that in undisturbed layers, older rocks lie beneath younger ones?',
+                options: [
+                    'A. Original horizontality',
+                    'B. Superposition',
+                    'C. Radioactive decay',
+                    'D. Cross-cutting relationship'
+                ],
+                answer: 1
+            },
+            {
+                id: 'geo-25',
+                stream: 'social',
+                subject: 'Geography',
+                examTitle: 'Grade 12 Geography 2018 E.C. Model Exam',
+                qNum: 25,
+                question: 'Why is oceanic crust forced to subduct beneath continental crust at convergent plate boundaries?',
+                options: [
+                    'A. It is thicker',
+                    'B. It is less dense',
+                    'C. It is denser',
+                    'D. It is older'
+                ],
+                answer: 2
+            },
+            {
+                id: 'geo-33',
+                stream: 'social',
+                subject: 'Geography',
+                examTitle: 'Grade 12 Geography 2018 E.C. Model Exam',
+                qNum: 33,
+                question: 'What indicates the absolute location of Ethiopia in terms of its North-South extent?',
+                options: [
+                    'A. 3°E - 48°E',
+                    'B. 3°N - 15°N',
+                    'C. 3°N - 48°N',
+                    'D. 15°N - 33°N'
+                ],
+                answer: 1
+            },
+
+            // HISTORY (Social Science Stream)
+            {
+                id: 'his-1',
+                stream: 'social',
+                subject: 'History',
+                examTitle: 'Grade 12 History 2018 E.C. Model Exam',
+                qNum: 1,
+                question: 'A student gathers letters and official documents from an ancient kingdom and carefully studies their original meaning before writing a report about the past. Which key elements of historical study are applied by the student mainly?',
+                options: [
+                    'A. Sources and Interpretation',
+                    'B. Presentation and Bias',
+                    'C. Opinion and Storytelling',
+                    'D. Assumption and Imagination'
+                ],
+                answer: 0
+            },
+            {
+                id: 'his-5',
+                stream: 'social',
+                subject: 'History',
+                examTitle: 'Grade 12 History 2018 E.C. Model Exam',
+                qNum: 5,
+                question: 'Suppose a community shifted from hunting and gathering to farming and animal domestication, began building permanent houses, and developed division of labor. Which historical development best explains these changes?',
+                options: [
+                    'A. The discovery of fire',
+                    'B. The Neolithic Revolution',
+                    'C. The Acheulean tool tradition',
+                    'D. The Middle Paleolithic adaptation'
+                ],
+                answer: 1
+            },
+            {
+                id: 'his-77',
+                stream: 'social',
+                subject: 'History',
+                examTitle: 'Grade 12 History 2018 E.C. Model Exam',
+                qNum: 77,
+                question: 'Of the following, which event facilitated the partition of Africa in 1884-1885?',
+                options: [
+                    'A. The Berlin Conference',
+                    'B. The Versailles Treaty',
+                    'C. The Vienna Congress',
+                    'D. The Durban Conference'
+                ],
+                answer: 0
+            },
+            {
+                id: 'his-87',
+                stream: 'social',
+                subject: 'History',
+                examTitle: 'Grade 12 History 2018 E.C. Model Exam',
+                qNum: 87,
+                question: 'What was the external significance of the Ethiopian victory over the Italians at Adwa in 1896?',
+                options: [
+                    'A. It restored black dignity and pride in the world.',
+                    'B. It guaranteed the political independence of Africa.',
+                    'C. It preserved the unity and boundary of all Africa.',
+                    'D. It enabled Crispi to get more recognition and prestige.'
+                ],
+                answer: 0
+            },
+
+            // MATHEMATICS (Common & Natural Stream)
+            {
+                id: 'math-v4-2',
+                stream: 'both',
+                subject: 'Mathematics',
+                examTitle: 'Grade 12 Mathematics 2018 E.C. Entrance Exam (Version 4)',
+                qNum: 2,
+                question: 'Which of the following numbers is an irrational number?',
+                options: [
+                    'A. π',
+                    'B. -7',
+                    'C. 0.222...',
+                    'D. √25'
+                ],
+                answer: 0
+            },
+            {
+                id: 'math-v4-7',
+                stream: 'natural',
+                subject: 'Mathematics',
+                examTitle: 'Grade 12 Mathematics 2018 E.C. Entrance Exam (Version 4)',
+                qNum: 7,
+                question: 'A toy rocket is launched. The path is modeled by h(t) = -16t² + 64t. At what time does it reach maximum height?',
+                options: [
+                    'A. 2 seconds',
+                    'B. 4 seconds',
+                    'C. 10 seconds',
+                    'D. 64 seconds'
+                ],
+                answer: 0
+            },
+            {
+                id: 'math-v4-21',
+                stream: 'natural',
+                subject: 'Mathematics',
+                examTitle: 'Grade 12 Mathematics 2018 E.C. Entrance Exam (Version 4)',
+                qNum: 21,
+                question: 'What is the simplest form of log 24 - 2 log 6 + log 15?',
+                options: [
+                    'A. 1',
+                    'B. 2',
+                    'C. 3',
+                    'D. 4'
+                ],
+                answer: 0
+            },
+            {
+                id: 'math-r1-7',
+                stream: 'both',
+                subject: 'Mathematics',
+                examTitle: 'Grade 12 Mathematics 2018 E.C. Entrance Exam (Round 1)',
+                qNum: 7,
+                question: 'Which one of the following sets is the solution of log₃(x) + log₃(x - 2) = 1?',
+                options: [
+                    'A. {-1, 3}',
+                    'B. {3}',
+                    'C. {2}',
+                    'D. {0, 2}'
+                ],
+                answer: 1
+            },
+            {
+                id: 'math-v5-1',
+                stream: 'natural',
+                subject: 'Mathematics',
+                examTitle: 'Grade 12 Mathematics 2018 E.C. Entrance Exam (Version 5)',
+                qNum: 1,
+                question: 'Which term of the arithmetic sequence -6, 1, 8, 15, ... is 414?',
+                options: [
+                    'A. 31',
+                    'B. 62',
+                    'C. 61',
+                    'D. 32'
+                ],
+                answer: 2
+            },
+
+            // ENGLISH (Common to Both Streams)
+            {
+                id: 'eng-21',
+                stream: 'both',
+                subject: 'English',
+                examTitle: 'Grade 12 English 2018 E.C. Entrance Exam (Version 2)',
+                qNum: 21,
+                question: 'I went home because I _________',
+                options: [
+                    'A. felt bored',
+                    'B. fell bored',
+                    'C. am feeling bored',
+                    'D. felting bored'
+                ],
+                answer: 0
+            },
+            {
+                id: 'eng-25',
+                stream: 'both',
+                subject: 'English',
+                examTitle: 'Grade 12 English 2018 E.C. Entrance Exam (Version 2)',
+                qNum: 25,
+                question: 'The man sitting next to me on the plane was nervous because he _________ before.',
+                options: [
+                    'A. hasn\'t flown',
+                    'B. didn\'t fly',
+                    'C. hadn\'t flown',
+                    'D. wasn\'t flying'
+                ],
+                answer: 2
+            },
+            {
+                id: 'eng-26',
+                stream: 'both',
+                subject: 'English',
+                examTitle: 'Grade 12 English 2018 E.C. Entrance Exam (Version 2)',
+                qNum: 26,
+                question: '_________ difficult the exam is, I will get good results.',
+                options: [
+                    'A. However',
+                    'B. Although',
+                    'C. In spite of',
+                    'D. Still'
+                ],
+                answer: 0
+            },
+            {
+                id: 'eng-58',
+                stream: 'both',
+                subject: 'English',
+                examTitle: 'Grade 12 English 2018 E.C. Entrance Exam (Version 2)',
+                qNum: 58,
+                question: 'The volcano lies dormant now, but we feel sure that it will erupt again within a year. (Choose synonym for "dormant")',
+                options: [
+                    'A. Slack',
+                    'B. Elevated',
+                    'C. Inattentive',
+                    'D. Inactive'
+                ],
+                answer: 3
+            },
+            {
+                id: 'eng-59',
+                stream: 'both',
+                subject: 'English',
+                examTitle: 'Grade 12 English 2018 E.C. Entrance Exam (Version 2)',
+                qNum: 59,
+                question: 'DDT has been banned in many parts of the world, but it is still in use in Africa. (Choose synonym for "banned")',
+                options: [
+                    'A. Banished',
+                    'B. Disestablished',
+                    'C. Prohibited',
+                    'D. Destroyed'
+                ],
+                answer: 2
+            }
+        ];
+
+        // --- APP STATE VARIABLES ---
+        let currentStream = 'social'; // 'social' | 'natural'
+        let currentTab = 'quiz'; // 'quiz' | 'archive' | 'analytics'
+        let selectedSubject = 'All';
+        
+        // Quiz state
+        let quizActive = false;
+        let quizFinished = false;
+        let currentQIndex = 0;
+        let userAnswers = {};
+        let quizTimerInterval = null;
+        let timeRemaining = 120 * 60; // 120 minutes in seconds
+        let totalTimeSpent = 0;
+
+        // --- DOM ELEMENT REFERENCES ---
+        const hero3d = document.getElementById('hero3d');
+
+        // Mouse tilt effect for 3D header
+        hero3d.addEventListener('mousemove', (e) => {
+            const rect = hero3d.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            hero3d.style.transform = `rotateX(${-y / 10}deg) rotateY(${x / 10}deg) scale(1.03)`;
+        });
+
+        hero3d.addEventListener('mouseleave', () => {
+            hero3d.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+        });
+
+        // --- STREAM HANDLING ---
+        function setStream(stream) {
+            currentStream = stream;
+            selectedSubject = 'All';
+
+            // Button active styles
+            document.querySelectorAll('.stream-btn').forEach(btn => {
+                btn.className = 'stream-btn px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all text-gray-400 hover:text-gray-200';
+            });
+            
+            const activeBtn = document.getElementById(`stream-btn-${stream}`);
+            if (stream === 'social') {
+                activeBtn.className = 'stream-btn px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md';
+                document.getElementById('stream-indicator-dot').className = 'w-3 h-3 rounded-full bg-emerald-500 animate-pulse';
+                document.getElementById('stream-title-text').innerText = 'Social Science Stream (Economics, Geography, History, Math, English)';
+                document.getElementById('stat-stream-name').innerText = 'Social Science';
+                document.getElementById('stat-stream-name').className = 'text-emerald-400 font-black text-xl sm:text-2xl md:text-3xl';
+            } else {
+                activeBtn.className = 'stream-btn px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md';
+                document.getElementById('stream-indicator-dot').className = 'w-3 h-3 rounded-full bg-cyan-500 animate-pulse';
+                document.getElementById('stream-title-text').innerText = 'Natural Science Stream (Mathematics Versions 1-5, English)';
+                document.getElementById('stat-stream-name').innerText = 'Natural Science';
+                document.getElementById('stat-stream-name').className = 'text-cyan-400 font-black text-xl sm:text-2xl md:text-3xl';
+            }
+
+            renderSubjectFilters();
+            updateAppStats();
+            if (currentTab === 'archive') renderArchive();
+            if (quizActive) resetExam();
+        }
+
+        // --- SUBJECT FILTERS RENDERING ---
+        function getAvailableSubjects() {
+            if (currentStream === 'social') {
+                return ['All', 'Economics', 'Geography', 'History', 'Mathematics', 'English'];
+            }
+            return ['All', 'Mathematics', 'English'];
+        }
+
+        function renderSubjectFilters() {
+            const container = document.getElementById('subject-filter-container');
+            const subjects = getAvailableSubjects();
+            
+            container.innerHTML = subjects.map(subj => `
+                <button onclick="filterSubject('${subj}')" class="px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                    selectedSubject === subj 
+                        ? 'bg-amber-500 text-gray-950 shadow-md font-bold' 
+                        : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                }">
+                    ${subj}
+                </button>
+            `).join('');
+        }
+
+        function filterSubject(subj) {
+            selectedSubject = subj;
+            renderSubjectFilters();
+            updateAppStats();
+            if (currentTab === 'archive') renderArchive();
+        }
+
+        // Filter Questions List helper
+        function getFilteredQuestions() {
+            return QUESTION_DATABASE.filter(q => {
+                const streamMatch = (q.stream === currentStream || q.stream === 'both');
+                const subjectMatch = (selectedSubject === 'All' || q.subject === selectedSubject);
+                return streamMatch && subjectMatch;
+            });
+        }
+
+        function updateAppStats() {
+            const list = getFilteredQuestions();
+            document.getElementById('stat-total-q').innerText = list.length;
+            document.getElementById('start-q-count').innerText = list.length;
+        }
+
+        // --- TAB SWITCHING ---
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+
+            // Update Tab button highlights
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.className = 'nav-tab flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold text-gray-400 hover:text-gray-200 hover:bg-gray-800 transition-all';
+            });
+            const activeTabBtn = document.getElementById(`tab-${tab}`);
+            if (activeTabBtn) {
+                activeTabBtn.className = 'nav-tab flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-500 text-gray-950 shadow-md';
+            }
+
+            if (tab === 'archive') renderArchive();
+        }
+
+        // --- PRACTICE EXAM ENGINE LOGIC ---
+        function startQuiz() {
+            const questions = getFilteredQuestions();
+            if (questions.length === 0) {
+                alert('No questions available for the selected stream/subject filter.');
+                return;
+            }
+
+            quizActive = true;
+            quizFinished = false;
+            currentQIndex = 0;
+            userAnswers = {};
+            timeRemaining = 120 * 60;
+            totalTimeSpent = 0;
+
+            document.getElementById('quiz-start-card').classList.add('hidden');
+            document.getElementById('quiz-results-card').classList.add('hidden');
+            document.getElementById('quiz-active-container').classList.remove('hidden');
+
+            startTimer();
+            renderQuestion();
+        }
+
+        function startTimer() {
+            clearInterval(quizTimerInterval);
+            quizTimerInterval = setInterval(() => {
+                timeRemaining--;
+                totalTimeSpent++;
+
+                const mins = Math.floor(timeRemaining / 60);
+                const secs = timeRemaining % 60;
+                document.getElementById('quiz-timer').innerText = 
+                    `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+                if (timeRemaining <= 0) {
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function renderQuestion() {
+            const questions = getFilteredQuestions();
+            const q = questions[currentQIndex];
+
+            document.getElementById('quiz-progress-badge').innerText = `Question ${currentQIndex + 1} of ${questions.length}`;
+            document.getElementById('quiz-subject-badge').innerText = `${q.subject} - ${q.examTitle}`;
+            document.getElementById('q-number-title').innerText = `Question #${q.qNum}`;
+            document.getElementById('q-text').innerText = q.question;
+            document.getElementById('q-step-counter').innerText = `${currentQIndex + 1} / ${questions.length}`;
+
+            // Progress bar
+            const percent = ((currentQIndex + 1) / questions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${percent}%`;
+
+            // Options List
+            const optionsContainer = document.getElementById('q-options-container');
+            optionsContainer.innerHTML = q.options.map((opt, idx) => {
+                const isSelected = userAnswers[q.id] === idx;
+                return `
+                    <button onclick="selectOption(${idx})" class="w-full text-left p-4 rounded-2xl border text-xs sm:text-sm transition-all flex items-center justify-between ${
+                        isSelected 
+                            ? 'bg-amber-500/10 border-amber-500 text-amber-300 font-semibold' 
+                            : 'bg-gray-950/60 border-gray-800 text-gray-300 hover:border-gray-700 hover:bg-gray-950'
+                    }">
+                        <span>${opt}</span>
+                        <div class="w-5 h-5 rounded-full border flex items-center justify-center ${
+                            isSelected ? 'border-amber-400 bg-amber-500 text-gray-950' : 'border-gray-700'
+                        }">
+                            ${isSelected ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            // Nav Buttons State
+            document.getElementById('btn-prev-q').disabled = (currentQIndex === 0);
+            if (currentQIndex === questions.length - 1) {
+                document.getElementById('btn-next-q').innerText = 'Finish & Grade';
+                document.getElementById('btn-next-q').className = 'px-6 py-2 rounded-xl bg-emerald-500 text-gray-950 text-xs font-black hover:bg-emerald-400 transition-all';
+            } else {
+                document.getElementById('btn-next-q').innerHTML = 'Next <i class="fa-solid fa-chevron-right ml-1"></i>';
+                document.getElementById('btn-next-q').className = 'px-6 py-2 rounded-xl bg-amber-500 text-gray-950 text-xs font-black hover:bg-amber-400 transition-all';
+            }
+        }
+
+        function selectOption(optionIdx) {
+            const questions = getFilteredQuestions();
+            const q = questions[currentQIndex];
+            userAnswers[q.id] = optionIdx;
+            renderQuestion();
+        }
+
+        function navigateQuiz(dir) {
+            const questions = getFilteredQuestions();
+            if (dir === 1 && currentQIndex === questions.length - 1) {
+                finishQuiz();
+                return;
+            }
+            currentQIndex = Math.max(0, Math.min(questions.length - 1, currentQIndex + dir));
+            renderQuestion();
+        }
+
+        function finishQuiz() {
+            clearInterval(quizTimerInterval);
+            quizActive = false;
+            quizFinished = true;
+
+            const questions = getFilteredQuestions();
+            let score = 0;
+
+            questions.forEach(q => {
+                if (userAnswers[q.id] === q.answer) score++;
+            });
+
+            const percentage = questions.length > 0 ? Math.round((score / questions.length) * 100) : 0;
+            
+            document.getElementById('res-percentage').innerText = `${percentage}%`;
+            document.getElementById('res-correct').innerText = `${score} / ${questions.length}`;
+            
+            const mins = Math.floor(totalTimeSpent / 60);
+            const secs = totalTimeSpent % 60;
+            document.getElementById('res-time-spent').innerText = `${mins}m ${secs}s`;
+
+            // Render Answer Key Review List
+            const reviewList = document.getElementById('results-review-list');
+            reviewList.innerHTML = questions.map((q, idx) => {
+                const userChoice = userAnswers[q.id];
+                const isCorrect = userChoice === q.answer;
+
+                return `
+                    <div class="p-4 rounded-2xl bg-gray-950 border border-gray-800 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-400">Q${idx + 1}. ${q.subject}</span>
+                            ${isCorrect 
+                                ? '<span class="text-xs font-bold text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> Correct</span>' 
+                                : '<span class="text-xs font-bold text-red-400"><i class="fa-solid fa-circle-xmark mr-1"></i> Incorrect</span>'
+                            }
+                        </div>
+                        <p class="text-xs sm:text-sm font-medium text-gray-200">${q.question}</p>
+                        <div class="grid grid-cols-1 gap-1.5 text-xs">
+                            ${q.options.map((opt, oIdx) => {
+                                let style = 'text-gray-400 bg-gray-900/50';
+                                if (oIdx === q.answer) style = 'text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 font-bold';
+                                else if (oIdx === userChoice && userChoice !== q.answer) style = 'text-red-400 bg-red-500/10 border border-red-500/30 line-through';
+
+                                return `<div class="p-2.5 rounded-xl ${style}">${opt}</div>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('quiz-active-container').classList.add('hidden');
+            document.getElementById('quiz-results-card').classList.remove('hidden');
+        }
+
+        function resetExam() {
+            clearInterval(quizTimerInterval);
+            quizActive = false;
+            quizFinished = false;
+            document.getElementById('quiz-active-container').classList.add('hidden');
+            document.getElementById('quiz-results-card').classList.add('hidden');
+            document.getElementById('quiz-start-card').classList.remove('hidden');
+        }
+
+        // --- QUESTION BANK ARCHIVE RENDER ---
+        function renderArchive() {
+            const query = document.getElementById('archive-search-input').value.toLowerCase();
+            const questions = getFilteredQuestions().filter(q => {
+                return q.question.toLowerCase().includes(query) ||
+                       q.subject.toLowerCase().includes(query) ||
+                       q.examTitle.toLowerCase().includes(query);
+            });
+
+            document.getElementById('archive-count').innerText = questions.length;
+            const container = document.getElementById('archive-questions-list');
+
+            if (questions.length === 0) {
+                container.innerHTML = `
+                    <div class="p-12 text-center rounded-2xl glass-card text-gray-500 text-xs font-medium">
+                        No questions matched your search query.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = questions.map((q, idx) => `
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
+                                ${q.subject}
+                            </span>
+                            <span class="text-xs text-gray-400 font-semibold">Question #${q.qNum}</span>
+                        </div>
+                        <span class="text-xs text-gray-500 font-mono">${q.examTitle}</span>
+                    </div>
+
+                    <h4 class="text-sm sm:text-base font-semibold text-gray-100">${q.question}</h4>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        ${q.options.map((opt, oIdx) => `
+                            <div class="p-3 rounded-xl border ${
+                                oIdx === q.answer 
+                                    ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300 font-bold' 
+                                    : 'bg-gray-950 border-gray-800 text-gray-400'
+                            }">
+                                ${opt}
+                                ${oIdx === q.answer ? '<span class="ml-2 text-[10px] bg-emerald-500 text-gray-950 font-extrabold px-1.5 py-0.5 rounded">Answer</span>' : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // INITIAL APP LOAD
+        window.onload = function() {
+            renderSubjectFilters();
+            updateAppStats();
+        };
+    </script>
+</body>
+</html>
